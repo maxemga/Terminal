@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Formik, Form, Field } from 'formik'
 import * as yup from 'yup';
@@ -20,6 +20,7 @@ const PaymentBlock: any = styled.div`
 
 const Title: any = styled.p`
   font-size: 50px;
+  text-align: center;
 `
 
 const Wrapper: any = styled.div`
@@ -208,6 +209,7 @@ const Window: any = styled.div`
 
 const OperatorsPaymentPage: React.FC = () => {
   const [isSuccessfully, setIsSuccessfully] = useState<boolean>(false);
+  const [title, setTitle] = useState('');
   const router: any = useRouter();
   const { request } = useHttp();
 
@@ -238,6 +240,10 @@ const OperatorsPaymentPage: React.FC = () => {
     }, 3000)
   }
 
+  useEffect(() => {
+    setTitle(localStorage.getItem('title') || '{}');
+  }, [])
+
   return (
     <PaymentBlock>
        <Wrapper>
@@ -249,7 +255,7 @@ const OperatorsPaymentPage: React.FC = () => {
                   validationSchema={validationSchema}>
                   {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => (
                   <>
-                      <Title>Положить деньги</Title>
+                      <Title>{title}</Title>
                       <FormBlock>
                           <FormInputs>
                               {errors.phone  ? <InputError type="number" name='phone' value={values.phone} onChange={handleChange}></InputError> : <Input type="number" name='phone' value={values.phone} onChange={handleChange}></Input>}

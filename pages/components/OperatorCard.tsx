@@ -36,10 +36,13 @@ interface OperatorCard {
 
 
 const OperatorCard: React.FC<OperatorCard> = (props: any) => {
+  const Record = () => {
+    localStorage.setItem('title', props.title);
+  }
 
   return (
 
-      <Card>
+      <Card onClick={() => Record()}>
         <Icon src ={`/images/operators/${props.nameImage}`} alt="" /> 
         <Title>{props.title}</Title>
       </Card>
