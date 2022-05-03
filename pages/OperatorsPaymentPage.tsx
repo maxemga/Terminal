@@ -4,7 +4,9 @@ import { Formik, Form, Field } from 'formik'
 import * as yup from 'yup';
 import { useHttp } from '../hooks/useHttp';
 import { ToastContainer, toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
+import Link from 'next/link';
 
 
 const PaymentBlock: any = styled.div`
@@ -13,6 +15,7 @@ const PaymentBlock: any = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column ;
+  font-family: 'consolas';
 `
 
 const Title: any = styled.p`
@@ -187,10 +190,25 @@ const A: any = styled.a`
   color: #1DA1F2;
 `
 
+const Window: any = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  animation: shadow 3s;
+  @keyframes shadow {
+    from {opacity: 0.0;}
+    to {opacity: 0.8;}
+    }
+`
+
 
 
 const OperatorsPaymentPage: React.FC = () => {
-  const [message, setMessage] = useState<string>();
+  const [isSuccessfully, setIsSuccessfully] = useState<boolean>(false);
+  const router: any = useRouter();
   const { request } = useHttp();
 
   const validationSchema = yup.object().shape({
@@ -201,7 +219,23 @@ const OperatorsPaymentPage: React.FC = () => {
 
   const Responce = async() => {
     const data: any = await request('/api/payment');
-    data.isTrue ? toast.success(data.message) : toast.error(data.message)
+
+    if (data.isTrue) {
+      toast.success(data.message)
+      Exit();
+    }
+    else 
+    {
+      toast.error(data.message)  
+    }
+  }
+
+  const Exit = () => {
+    setIsSuccessfully(true);
+    setTimeout(async () => {
+      await router.push('/OperatorCardsPage');
+      setIsSuccessfully(false);
+    }, 3000)
   }
 
   return (
@@ -215,10 +249,10 @@ const OperatorsPaymentPage: React.FC = () => {
                   validationSchema={validationSchema}>
                   {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => (
                   <>
-                      <Title>Выбран оператор</Title>
+                      <Title>Положить деньги</Title>
                       <FormBlock>
                           <FormInputs>
-                              {errors.phone  ? <InputError name='phone' value={values.phone} onChange={handleChange}></InputError> : <Input name='phone' value={values.phone} onChange={handleChange}></Input>}
+                              {errors.phone  ? <InputError type="number" name='phone' value={values.phone} onChange={handleChange}></InputError> : <Input type="number" name='phone' value={values.phone} onChange={handleChange}></Input>}
                               <Label>Телефон</Label>
                           </FormInputs>
 
@@ -231,8 +265,9 @@ const OperatorsPaymentPage: React.FC = () => {
                           {errors.sum && <Span>{errors.sum}</Span>}
                       </FormBlock>
                       <Buttons>
-                        <Button><A href="/OperatorCardsPage">Назад</A></Button>
-                        {!isValid || !dirty ? <ButtonSubmitError disabled={!isValid || !dirty} >Оплатить</ButtonSubmitError> : <ButtonSubmit disabled={!isValid || !dirty} onClick={() => Responce()}>Оплатить</ButtonSubmit>}
+                        <Button> <Link href="/OperatorCardsPage"><A>Назад</A></Link></Button>
+
+                        {!isValid || !dirty ? <ButtonSubmitError disabled={!isValid || !dirty } >Оплатить</ButtonSubmitError> : <ButtonSubmit disabled={!isValid || !dirty } onClick={() => Responce()}>Оплатить</ButtonSubmit>}
                         <ToastContainer
                             position="top-center"
                             autoClose={2500}
@@ -244,6 +279,8 @@ const OperatorsPaymentPage: React.FC = () => {
                             draggable
                             pauseOnHover={false}
                           />
+                        {isSuccessfully ? <Window></Window> : null}
+
                       </Buttons>
                   </>
                   )}

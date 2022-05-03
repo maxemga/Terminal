@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import OperatorCard from './components/OperatorCard'
 import { useHttp }  from './../hooks/useHttp';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const OperatorsBlock: any = styled.div`
   display: flex;
@@ -9,12 +11,13 @@ const OperatorsBlock: any = styled.div`
   height: 100vh;
   align-items: center;
   justify-content: center;
+  font-family: 'consolas';
+  @media (max-width: 1400px) { 
+   
+    display: block;
+  }
 `
 
-const Wrapper: any = styled.div`
-  margin: 0 auto;
-  max-width: 90%:
-`
 const A: any = styled.a`
   text-decoration: none;
   color: black;
@@ -22,10 +25,8 @@ const A: any = styled.a`
 
 const OperatorCardsPage: React.FC = () => {
   const [operators, setOperators] = useState<any[]>();
-  const [val, setVal] = useState<number>(0);
-
-  const { request } = useHttp()
-
+  const { request } = useHttp();
+  
   const Responce = async () => {
     const data: any = await request('/api/render');
     setOperators(data);
@@ -39,11 +40,11 @@ const OperatorCardsPage: React.FC = () => {
     <OperatorsBlock>
      
       {operators && operators.map(element => (
-        <A href='/OperatorsPaymentPage'><OperatorCard nameImage={element.image} title={element.title}></OperatorCard></A>
+       <Link href="/OperatorsPaymentPage"><A><OperatorCard nameImage={element.image} title={element.title}></OperatorCard></A></Link>
       ))}
-       
+
     </OperatorsBlock>
-    
+     
   );
 }
 

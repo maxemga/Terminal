@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import OperatorCardsPage from './OperatorCardsPage'
 import OperatorsPaymentPage from './OperatorsPaymentPage'
 import styled, { createGlobalStyle } from 'styled-components';
+import ContextAuth from './../context/ContextAuth'
 
 
 const Global: any = createGlobalStyle`
@@ -17,7 +18,11 @@ const Home: NextPage = () => {
   return (
     <>
       <Global/>
-      <OperatorCardsPage/>
+   
+        <OperatorCardsPage/>
+        <OperatorsPaymentPage/>
+      
+      
     </>
   )
 }

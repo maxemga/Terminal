@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-
 
 const Card = styled.div`
   box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
@@ -11,6 +10,11 @@ const Card = styled.div`
     box-shadow: rgba(0, 0, 0, 0.6) 0px 18px 100px -10px;
     padding: 60px; 
     transition: 0.6s;
+  }
+  @media (max-width: 1400px) { 
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
 `
 
@@ -33,9 +37,6 @@ interface OperatorCard {
 
 const OperatorCard: React.FC<OperatorCard> = (props: any) => {
 
-  useEffect(() => {
-    console.log(props.title)
-  }, [])
   return (
 
       <Card>
@@ -47,8 +48,3 @@ const OperatorCard: React.FC<OperatorCard> = (props: any) => {
 }
 
 export default OperatorCard;
-
-
-// "/images/operators/`"
-
-// /images/operators/mts.png
