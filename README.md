@@ -4,6 +4,7 @@
 
 ```bash
 npm i
+npm i styled-components
 # и затем
 npm run dev
 ```
