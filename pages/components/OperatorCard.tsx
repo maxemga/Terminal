@@ -26,6 +26,7 @@ const Title = styled.p`
  
 interface OperatorCard {
   title: string,
+  key: string
 }
 
 

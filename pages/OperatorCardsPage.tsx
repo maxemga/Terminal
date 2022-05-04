@@ -61,7 +61,7 @@ const OperatorCardsPage: React.FC = () => {
       <OperatorsBlock>
       
         {operators && operators.map(element => (
-        <Link href="/OperatorsPaymentPage"><A><OperatorCard title={element.title}></OperatorCard></A></Link>
+        <Link key={element.id} href="/OperatorsPaymentPage"><A key={element.id}><OperatorCard key={element.id} title={element.title}></OperatorCard></A></Link>
         ))}
 
       </OperatorsBlock>
