@@ -240,7 +240,8 @@ const OperatorsPaymentPage: React.FC = () => {
   })
 
   const Add = async(values: any) => {
-     const data: any = await request('/api/add', 'POST', values)
+     const data: any = await request('/api/add', 'POST', values);
+     toast.success("Оператор успешно добавлен");
   }
 
   return (
@@ -269,6 +270,17 @@ const OperatorsPaymentPage: React.FC = () => {
                         {!isValid || !dirty ? <ButtonSubmitError disabled={!isValid || !dirty } >Оплатить</ButtonSubmitError> : <ButtonSubmit type="submit" disabled={!isValid || !dirty } onClick={() => Add(values)} >Оплатить</ButtonSubmit>}
                         
                       </Buttons>
+                      <ToastContainer
+                            position="top-center"
+                            autoClose={2500}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss={false}
+                            draggable
+                            pauseOnHover={false}
+                          />
                   </>
                   )}
           </Formik>
