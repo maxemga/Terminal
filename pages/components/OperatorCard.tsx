@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React  from 'react';
 import styled from 'styled-components';
 
 const Card = styled.div`
+  cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 18px 50px -10px;
   border-radius: 10px;
   padding: 50px; 
@@ -18,20 +19,13 @@ const Card = styled.div`
   }
 `
 
-const Icon = styled.img`
-  width: 300px;
-  height: 300px;
-`
-
 const Title = styled.p`
-  margin-top: 40px;
   font-size: 25px;
   text-align: center;
 `
  
 interface OperatorCard {
   title: string,
-  nameImage: string
 }
 
 
@@ -43,7 +37,6 @@ const OperatorCard: React.FC<OperatorCard> = (props: any) => {
   return (
 
       <Card onClick={() => Record()}>
-        <Icon src ={`/images/operators/${props.nameImage}`} alt="" /> 
         <Title>{props.title}</Title>
       </Card>
     

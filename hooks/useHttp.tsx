@@ -1,19 +1,28 @@
 import { useCallback, useState } from "react"
-import { operators } from "../pages/api/data/operators"
 
 export const useHttp: any = () => {
 
-    const request = async(url: string) => {
+    const request = async(url: string, method: string = 'GET', body: any = null, type ={}, headers: any = {}) => {
+
+        if (method == "POST") {
+            const response = await fetch('http://localhost:3000/api/add', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify(body)
+              });
+        }
+
+      
+       else {
         const responce = await fetch(`http://localhost:3000${url}`);
         const data = await responce.json();
 
-        if (!data) {
-            return{
-                notFound: true,
-            }
-        }
-
         return data;
+       }
+
+       
     }
 
     
